@@ -26,20 +26,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.vpncat.wireguardvpnapp.VpnConfig
 import com.example.vpncat.wireguardvpnapp.VpnViewModel
 import com.example.vpncat.ui.theme.VPNCatTheme
-
-/**
- * Composable function for the Server Selection Screen.
- * Displays a list of available VPN configurations and allows the user to select one.
- *
- * @param navController NavController for navigating back to the home screen.
- * @param viewModel The VpnViewModel to interact with VPN configurations.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ServerSelectionScreen(
     navController: NavController,
     viewModel: VpnViewModel = viewModel()
 ) {
+
     val vpnConfigs by viewModel.vpnConfigs.collectAsState()
     val selectedVpnConfig by viewModel.selectedVpnConfig.collectAsState()
 
@@ -55,7 +48,7 @@ fun ServerSelectionScreen(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Black)
             )
         },
-        containerColor = Color.Black // Set background color for the screen
+        containerColor = Color.Black
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -85,7 +78,7 @@ fun ServerSelectionScreen(
                             isSelected = config.id == selectedVpnConfig?.id,
                             onSelect = {
                                 viewModel.selectVpnConfig(it)
-                                navController.popBackStack() // Navigate back after selection
+                                navController.popBackStack()
                             }
                         )
                     }
@@ -95,13 +88,6 @@ fun ServerSelectionScreen(
     }
 }
 
-/**
- * Composable function for a single server configuration item in the list.
- *
- * @param config The VpnConfig to display.
- * @param isSelected Boolean indicating if this config is currently selected.
- * @param onSelect Callback when the item is selected.
- */
 @Composable
 fun ServerConfigItem(
     config: VpnConfig,
@@ -114,7 +100,7 @@ fun ServerConfigItem(
             .clickable { onSelect(config) },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Color(0xFF8A2BE2).copy(alpha = 0.2f) else Color(0xFF1C1C1C) // Purple tint if selected
+            containerColor = if (isSelected) Color(0xFF8A2BE2).copy(alpha = 0.2f) else Color(0xFF1C1C1C)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -143,19 +129,10 @@ fun ServerConfigItem(
                 Icon(
                     imageVector = Icons.Default.CheckCircle,
                     contentDescription = "Selected",
-                    tint = Color(0xFF8A2BE2), // Purple checkmark
+                    tint = Color(0xFF8A2BE2),
                     modifier = Modifier.size(24.dp)
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ServerSelectionScreenPreview() {
-    VPNCatTheme {
-        val mockNavController = rememberNavController()
-        ServerSelectionScreen(navController = mockNavController, viewModel = VpnViewModel())
     }
 }

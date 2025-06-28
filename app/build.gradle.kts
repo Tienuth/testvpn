@@ -103,10 +103,7 @@ dependencies {
     // LocalBroadcastManager (NEW)
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
-    val wireguardVersion = "1.0.20230706" // ĐÃ CẬP NHẬT PHIÊN BẢN Ở ĐÂY
 
-    implementation("com.wireguard.android:tunnel:$wireguardVersion") // Module chính để quản lý tunnel
-    implementation("com.wireguard.android:wireguard-android:$wireguardVersion") // Module chứa các tiện ích và backend
-    implementation("com.wireguard.android:config:$wireguardVersion") // Đảm bảo module config được thêm
+
 
 }

@@ -23,25 +23,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Dns
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.PowerSettingsNew
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.Dns // Thêm import này cho icon Dns
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,10 +49,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vpncat.ui.theme.ServerSelectionScreen
-import com.example.vpncat.wireguardvpnapp.MyVpnService
 import com.example.vpncat.wireguardvpnapp.VpnConnectionStatus
 import com.example.vpncat.wireguardvpnapp.VpnViewModel
 import com.example.vpncat.ui.theme.VPNCatTheme
+import com.example.vpncat.wireguardvpnapp.MyVpnService
 
 class MainActivity : ComponentActivity() {
     private lateinit var vpnStatusReceiver: BroadcastReceiver
@@ -115,7 +113,7 @@ class MainActivity : ComponentActivity() {
  * It displays the VPN toggle button, status, and navigation elements.
  */
 @Composable
-fun VpnAppScreen(viewModel: VpnViewModel, navController: NavController) { // Pass NavController
+fun VpnAppScreen(viewModel: VpnViewModel, navController: NavController) {
     val context = LocalContext.current
     val vpnStatus by viewModel.vpnStatus.collectAsState()
     val connectedVpnName by viewModel.connectedVpnName.collectAsState()
@@ -153,7 +151,7 @@ fun VpnAppScreen(viewModel: VpnViewModel, navController: NavController) { // Pas
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Top Bar (Simplified)
+        // Top Bar
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -187,23 +185,17 @@ fun VpnAppScreen(viewModel: VpnViewModel, navController: NavController) { // Pas
             }
         }
 
-        // Header/Logo (Placeholder)
+        // Header/Logo
         Column(
             modifier = Modifier.padding(top = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "QuickFox",
+                text = "CATVPN",
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
                 letterSpacing = 2.sp
-            )
-            Text(
-                text = "⚡️ Tặng bạn 10 VIP Card",
-                fontSize = 12.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 4.dp)
             )
         }
 
@@ -348,7 +340,7 @@ fun ServerSelectionButton(selectedServerName: String, onClick: () -> Unit) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Filled.Dns, // Đã thay đổi từ Outlined.Server sang Filled.Dns
+                    imageVector = Icons.Filled.Dns,
                     contentDescription = "Server Mode",
                     tint = Color.Gray,
                     modifier = Modifier.size(24.dp)
@@ -368,7 +360,7 @@ fun ServerSelectionButton(selectedServerName: String, onClick: () -> Unit) {
                 )
             }
             Icon(
-                imageVector = Icons.Default.MoreHoriz, // Using MoreHoriz for the arrow-like icon
+                imageVector = Icons.Default.MoreHoriz,
                 contentDescription = "Select Server",
                 tint = Color.Gray,
                 modifier = Modifier.size(24.dp)
@@ -377,10 +369,9 @@ fun ServerSelectionButton(selectedServerName: String, onClick: () -> Unit) {
     }
 }
 
-
 @Composable
 fun BottomNavigationBar() {
-    val selectedItem = remember { mutableStateOf("công tác") } // State for selected tab
+    val selectedItem = remember { mutableStateOf("công tác") }
 
     Row(
         modifier = Modifier
@@ -423,7 +414,7 @@ fun BottomNavItem(
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        val iconTint = if (isSelected) Color(0xFF8A2BE2) else Color.Gray // Purple for selected
+        val iconTint = if (isSelected) Color(0xFF8A2BE2) else Color.Gray
         val labelColor = if (isSelected) Color(0xFF8A2BE2) else Color.Gray
 
         if (isSelected) {
@@ -439,15 +430,5 @@ fun BottomNavItem(
         }
         Spacer(Modifier.height(4.dp))
         Text(text = label, fontSize = 12.sp, color = labelColor)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    VPNCatTheme {
-        val mockViewModel = VpnViewModel()
-        val mockNavController = rememberNavController()
-        VpnAppScreen(viewModel = mockViewModel, navController = mockNavController)
     }
 }
