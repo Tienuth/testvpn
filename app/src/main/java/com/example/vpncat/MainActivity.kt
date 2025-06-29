@@ -151,39 +151,7 @@ fun VpnAppScreen(viewModel: VpnViewModel, navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Top Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("15:43", fontSize = 13.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
-                Spacer(Modifier.width(4.dp))
-                Icon(Icons.Filled.Wifi, contentDescription = "Wifi", tint = Color.White, modifier = Modifier.size(16.dp))
-                Text("...ll", fontSize = 13.sp, color = Color.White, fontWeight = FontWeight.SemiBold)
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("95", fontSize = 13.sp, color = Color.Gray, fontWeight = FontWeight.SemiBold)
-                Spacer(Modifier.width(4.dp))
-                Box(
-                    modifier = Modifier
-                        .width(20.dp)
-                        .height(10.dp)
-                        .background(Color.Gray.copy(alpha = 0.3f), RoundedCornerShape(2.dp))
-                        .padding(1.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth(0.95f)
-                            .background(Color.Gray, RoundedCornerShape(1.dp))
-                    )
-                }
-            }
-        }
+
 
         // Header/Logo
         Column(

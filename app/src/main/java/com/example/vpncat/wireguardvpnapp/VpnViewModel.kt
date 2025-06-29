@@ -62,7 +62,7 @@ class VpnViewModel : ViewModel() {
             name = "Singapor",
             privateKey = "3GAt9Zoo4JoJ9oZtr9IbiwCqUIxPzAz5PGaTizGcHW1=", // Thay đổi với Private Key của server 2
             publicKey = "YOUR_CLIENT_PUBLIC_KEY_DERIVED_FROM_PRIVATE_KEY",
-            address = "10.7.0.3/24", // Thay đổi địa chỉ IP của client cho server 2
+            address = "10.7.0.2/32", // Thay đổi địa chỉ IP của client cho server 2
             dnsServers = listOf("94.140.14.14", "94.140.15.15"),
             peerPublicKey = "Rz2VCeTmh0PhK1XPRMq2Ow/sXFyM76LEaNz+JMxlPV5=", // Thay đổi Public Key của server 2
             presharedKey = "4dSQi6ONEufLcIRkliZz3VJTqf+4Je2U3hTuZoHeQ9M=", // Thay đổi Preshared Key của server 2

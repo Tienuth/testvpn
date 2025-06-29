@@ -33,8 +33,6 @@ class MyVpnService : VpnService() {
         }
     }
 
-    private var vpnInterface: VpnService.Builder? = null
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val vpnConfig: VpnConfig? = intent?.getParcelableExtra("VPN_CONFIG")
 
@@ -44,6 +42,9 @@ class MyVpnService : VpnService() {
         }
 
         try {
+            // Kiểm tra cấu hình VPN
+            Log.d(TAG, "Attempting to connect to VPN at endpoint: ${vpnConfig.endpoint}")
+
             // Khởi tạo NotificationChannel (dành cho Android 8.0 trở lên)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val channel = NotificationChannel(
@@ -68,20 +69,17 @@ class MyVpnService : VpnService() {
             // Lấy địa chỉ IP (Private IP) từ cấu hình VPN
             val ipAddress = vpnConfig.address.split("/")[0]
 
-            // Tạo Builder cho kết nối VPN
             val vpnBuilder = Builder()
             vpnBuilder.setSession("VPNCat Session")
-                .addAddress(ipAddress, 24)  // Sử dụng Private IP (10.7.0.2)
+                .addAddress(ipAddress, 32)  // Sử dụng Private IP (10.7.0.2)
                 .addRoute("0.0.0.0", 0) // Cho phép tất cả lưu lượng mạng đi qua VPN
                 .addDnsServer(vpnConfig.dnsServers[0])
-                .addDnsServer(vpnConfig.dnsServers[1])  // Đảm bảo thêm DNS thứ hai
+                .addDnsServer(vpnConfig.dnsServers[1])
 
-            vpnInterface = vpnBuilder // Lưu lại builder để có thể sử dụng sau này
+            val vpnInterface = vpnBuilder.establish()
 
-            // Thiết lập kết nối VPN
-            val vpnService = vpnBuilder.establish()
-
-            if (vpnService != null) {
+            // Kiểm tra kết nối VPN
+            if (vpnInterface != null) {
                 sendVpnStatusUpdate(VpnConnectionStatus.Connecting, vpnConfig.name)
                 Log.d(TAG, "VPN started with address: ${vpnConfig.address}")
             } else {
@@ -99,7 +97,6 @@ class MyVpnService : VpnService() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "VPN service stopped")
-        // Không cần phải đóng vpnInterface ở đây, dịch vụ sẽ tự ngừng kết nối
         sendVpnStatusUpdate(VpnConnectionStatus.Disconnected, null)
     }
 
